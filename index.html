@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather App | Shifa Shaikh</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<header class="site-header">
+    <h1>Weather App</h1>
+    <p>Check current weather anywhere in the world</p>
+</header>
+
+
+<section class="weather-section">
+  <h2 class="section-title">Get Weather</h2>
+  
+  <div class="weather-container">
+    <input type="text" id="cityInput" placeholder="Enter city name">
+
+    <div class="button-group">
+      <button id="getWeatherBtn">Get Weather</button>
+      <button id="currentLocationBtn">Use My Location</button>
+    </div>
+
+    <div id="loading" style="display:none;">Fetching weather...</div>
+    <div id="weatherResult"></div>
+  </div>
+</section>
+
+<script src="weather.js"></script>
+</body>
+</html>
