@@ -1,5 +1,6 @@
+// Import API Key from config.js
+import { apiKey } from "./config.js";
 
-const apiKey = "70f496fd19cab031631ebc74f9d8d10c"; 
 const cityInput = document.getElementById("cityInput");
 const getWeatherBtn = document.getElementById("getWeatherBtn");
 const currentLocationBtn = document.getElementById("currentLocationBtn");
@@ -23,12 +24,8 @@ currentLocationBtn.addEventListener("click", () => {
     loading.style.display = "block";
     weatherResult.innerHTML = "";
     navigator.geolocation.getCurrentPosition(
-        position => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            fetchWeatherByCoords(lat, lon);
-        },
-        error => {
+        position => fetchWeatherByCoords(position.coords.latitude, position.coords.longitude),
+        () => {
             loading.style.display = "none";
             weatherResult.innerHTML = "<p style='color:red;'>Unable to get your location.</p>";
         }
@@ -41,14 +38,12 @@ function fetchWeatherByCity(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
 
     fetch(url)
-        .then(response => {
-            if (!response.ok) throw new Error("City not found");
-            return response.json();
+        .then(res => {
+            if (!res.ok) throw new Error("City not found");
+            return res.json();
         })
         .then(data => displayWeather(data))
-        .catch(err => {
-            weatherResult.innerHTML = `<p style='color:red;'>${err.message}</p>`;
-        })
+        .catch(err => weatherResult.innerHTML = `<p style='color:red;'>${err.message}</p>`)
         .finally(() => loading.style.display = "none");
 }
 
@@ -58,14 +53,12 @@ function fetchWeatherByCoords(lat, lon) {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
     fetch(url)
-        .then(response => {
-            if (!response.ok) throw new Error("Location not found");
-            return response.json();
+        .then(res => {
+            if (!res.ok) throw new Error("Location not found");
+            return res.json();
         })
         .then(data => displayWeather(data))
-        .catch(err => {
-            weatherResult.innerHTML = `<p style='color:red;'>${err.message}</p>`;
-        })
+        .catch(err => weatherResult.innerHTML = `<p style='color:red;'>${err.message}</p>`)
         .finally(() => loading.style.display = "none");
 }
 
